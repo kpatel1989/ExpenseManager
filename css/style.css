@@ -1,0 +1,13 @@
+@CHARSET "ISO-8859-1";
+.pointer
+{
+	cursor : pointer;	
+}
+  body{
+  	font-size : 14px;
+  	user-select : none;
+  	-webkit-user-select : none;
+  	-mox-user-select : none;
+  }
+  
+  
