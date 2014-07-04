@@ -24,7 +24,7 @@ if (isset($_POST["category"])){
 	
 	$response["bSuccessfull"] = TRUE;
 	$response["uExpenseId"] = $row['max(uExpenseId)'] +1;
-	$response['uCategory'] = $catRow['strName'];
+	$response['strCategory'] = $catRow['strName'];
 	$response['uAmount'] = $_POST['value']; 
 }
 else{

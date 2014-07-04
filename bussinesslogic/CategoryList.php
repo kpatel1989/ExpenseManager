@@ -15,7 +15,7 @@ if (isset($_POST['operation'])){
 	$config->disconnect($con);
 	
 	$categoryData = array();
-	$categoryData["strCategoryName"] = $_POST['categoryName'];
+	$categoryData["strCategory"] = $_POST['categoryName'];
 	$categoryData["uCategoryId"] = ($row['max(uCategoryId)'] +1);
 	$response = array();
 	$response["bSuccessfull"] = TRUE;
@@ -31,7 +31,7 @@ else {
 	$i = 0;
 	while ($row = mysqli_fetch_assoc($result)){
 		$categoryData[$i]['uCategoryId'] = $row['uCategoryId'];
-		$categoryData[$i]['strCategoryName'] = $row['strname'];
+		$categoryData[$i]['strCategory'] = $row['strname'];
 		$i++;
 	}
 	$config->disconnect($con);

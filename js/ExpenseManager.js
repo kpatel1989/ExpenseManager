@@ -1,12 +1,13 @@
+var model_UserData;
+var homeUI;
 $(document).ready(function(){
-    var model_UserData = new ExpenseManager.Models.UserData();
-    var homeUI = new ExpenseManager.Views.HomeUI();
+    model_UserData = new ExpenseManager.Models.UserData();
+    homeUI = new ExpenseManager.Views.HomeUI();
     homeUI.setModel(model_UserData);
     
     model_UserData.loadTodaysExpenses();
     model_UserData.loadCategories();
-    
-    
+
     //fillExpenseTable();
 	//fillCategoryList();
     return;
@@ -54,7 +55,7 @@ $(document).ready(function(){
 			var newCategory = response.categoryData;
 			var listParent = document.getElementById('categoryList');
 			var cmbParent = document.getElementById('cmbCategory');
-			addCategoryToList(listParent,cmbParent,newCategory['strCategoryName'],newCategory['uCategoryId']);
+			addCategoryToList(listParent,cmbParent,newCategory['strCategory'],newCategory['uCategoryId']);
 		}
 		function onError(response){
 			
@@ -63,6 +64,20 @@ $(document).ready(function(){
 	
 	
 });
+
+function OnSaveExpenseClicked(data){
+    url = "bussinesslogic/SaveExpense.php";
+    ajaxRequest(url,data, onExpenseAdded, onError);
+    var me = this;
+    function onExpenseAdded(response){
+        model_UserData.AddExpenseRow(response);
+        return;
+        headerParent = $("#expenseTable")[0];
+        me.AddExpenseDataToRow(headerParent,response['uCategory'],response['uAmount'],response['uExpenseId']);
+    }
+    function onError(response){
+    }
+}
 /*
 
 function fillExpenseTable(){
@@ -173,7 +188,7 @@ function fillCategoryList(){
 		listParent.innerHTML = "";
 		cmbParent.innerHTML = "";
 		for(i=0;i<categories.length;i++){
-			addCategoryToList(listParent,cmbParent,categories[i]["strCategoryName"],categories[i]['uCategoryId']);
+			addCategoryToList(listParent,cmbParent,categories[i]["strCategory"],categories[i]['uCategoryId']);
 			
 		}
 	}

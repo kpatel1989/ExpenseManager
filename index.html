@@ -12,7 +12,9 @@
 <script src="/ExpenseManager/js/lib/jquery/jquery-ui-1.10.4.js"></script>
 <script src="/ExpenseManager/js/lib/handlebars/handlebars-v1.3.0.js"></script>
 
-<Script src="/ExpenseManager/js/main.js"></Script>
+
+<script src="/ExpenseManager/js/main.js"></Script>
+<script src="/ExpenseManager/js/constants/StringConstants.js"> </script>
 <script src="/ExpenseManager/js/model/Model.js" type="text/javascript"></script>
 <script src="/ExpenseManager/js/view/View.js" type="text/javascript"></script>
 <script src="/ExpenseManager/js/view/HomeUI.js" type="text/javascript"></script>
@@ -36,7 +38,7 @@
 
 <script type="text/template" id="categoryItem">
 	<li>
-        <label> <%= strCategoryName %></label>
+        <label> <%= strCategory %></label>
         <input type="button" class="delete category" value="Delete"/>
         <input type="hidden" value="<%= uCategoryId %>"/>
         

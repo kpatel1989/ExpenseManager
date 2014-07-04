@@ -20,7 +20,63 @@ ExpenseManager.Views.DailyExpense = Backbone.View.extend({
 			oExpenseList.$el.innerHTML += oExpenseList.template(expense.toJSON());
 		});
 	},
-})
+    addNewExpense : function(expense){
+        this.model.add(expense);
+        this.$el.innerHTML += this.template(expense.toJSON());
+    }
+});
+
+ExpenseManager.Views.AddExpense = Backbone.View.extend({
+    m_txtTodayDate : null,
+	m_cmbCategory : null,
+	m_txtAmount : null,
+	m_txtNotes : null,
+	m_btnSave : null,
+
+	initialize : function(){
+		this.m_txtTodayDate = $('#TodayDate');
+        this.m_txtTodayDate.datepicker();
+        this.m_txtTodayDate.datepicker("option",{"dateFormat":"yy-mm-dd","showAnim":"slideDown"});
+        today = new Date();
+        this.m_txtTodayDate[0].value = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+
+        this.m_cmbCategory = $("#cmbCategory")[0];
+        this.m_txtAmount = $("#txtExpense")[0];
+        this.m_txtNotes = $("#txtNotes")[0];
+        this.m_btnSave = $("#btnSave")[0];
+	},
+
+	render : function(){
+
+	},
+    events : {
+        "click #btnSave" : "onSaveBtnClick"
+    },
+    onSaveBtnClick : function(evt){
+        expense = {
+			category:this.m_cmbCategory.selectedOptions[0].value,
+			date : this.m_txtTodayDate[0].value,
+			value : this.m_txtAmount.value,
+			notes : this.m_txtNotes.value
+		};
+        this.trigger(ExpenseManager.StringConstants.strSaveExpenseBtnClick,expense);
+    },
+
+});
+
+ExpenseManager.Views.AddCategory = Backbone.View.extend({
+	m_txtCategory : null,
+	m_btnSave : null,
+
+	initialize : function(){
+
+	},
+
+	render : function(){
+
+	},
+});
+
 
 ExpenseManager.Views.Categories = Backbone.View.extend({
     el : null,
@@ -29,14 +85,18 @@ ExpenseManager.Views.Categories = Backbone.View.extend({
     template : null,
     dropDown : null,
     
-    initialize : function(cateogory){
+    initialize : function(){
         this.template = _.template( $("#categoryItem").html());
         this.$el = $("#categoryList")[0];
         this.dropDown = $("#cmbCategory")[0];
-        this.model = cateogory;
+        this.model = new ExpenseManager.Collections.Category();
         console.log("Cateogory initialised.");
     },
     
+    setModel : function(model){
+        this.model = model;
+    },
+
     render : function(){
         var me = this;
         this.model.each(function(category){
