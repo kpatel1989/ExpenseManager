@@ -5,7 +5,7 @@ ExpenseManager.Views.DailyExpense = Backbone.View.extend({
 	template : null,
 	initialize : function(expenses){
 		this.template = _.template( $("#expenseItem").html());
-		this.$el = $("#expenseTable")[0];
+//		this.$el = $("#expenseTable")[0];
 		this.model = expenses;
 		console.log("DailyExpense view initialised");
 	},
@@ -17,12 +17,12 @@ ExpenseManager.Views.DailyExpense = Backbone.View.extend({
 		var i,curModel,template ;
 		var oExpenseList = this;
 		this.model.each(function(expense){
-			oExpenseList.$el.innerHTML += oExpenseList.template(expense.toJSON());
+			oExpenseList.$el[0].innerHTML += oExpenseList.template(expense.toJSON());
 		});
 	},
     addNewExpense : function(expense){
         this.model.add(expense);
-        this.$el.innerHTML += this.template(expense.toJSON());
+        this.$el[0].innerHTML += this.template(expense.toJSON());
     }
 });
 
@@ -71,7 +71,16 @@ ExpenseManager.Views.AddCategory = Backbone.View.extend({
 	initialize : function(){
 
 	},
-
+    events : {
+        "click #btnAddCategory" : "onSaveBtnClick"
+    },
+    onSaveBtnClick : function(evt){
+        category = {
+			operation : "add",
+			categoryName : $("#txtCategoryName")[0].value
+		};
+        this.trigger(ExpenseManager.StringConstants.strSaveCategoryBtnClick,category);
+    },
 	render : function(){
 
 	},
@@ -87,7 +96,7 @@ ExpenseManager.Views.Categories = Backbone.View.extend({
     
     initialize : function(){
         this.template = _.template( $("#categoryItem").html());
-        this.$el = $("#categoryList")[0];
+//        this.$el = $("#categoryList")[0];
         this.dropDown = $("#cmbCategory")[0];
         this.model = new ExpenseManager.Collections.Category();
         console.log("Cateogory initialised.");
@@ -100,14 +109,27 @@ ExpenseManager.Views.Categories = Backbone.View.extend({
     render : function(){
         var me = this;
         this.model.each(function(category){
-            me.$el.innerHTML += me.template(category.toJSON());
+            me.$el[0].innerHTML += me.template(category.toJSON());
             
             var option = document.createElement("option");
             option.value = category.uCategoryId;
             option.innerHTML = category.strCategory;
             me.dropDown.appendChild(option);	
         });
+    },
+    addNewCategory : function(category){
+        this.$el[0].innerHTML += this.template(category.toJSON());
+
+        var option = document.createElement("option");
+        option.value = category.uCategoryId;
+        option.innerHTML = category.strCategory;
+        this.dropDown.appendChild(option);
+    },
+    events : {
+      "click #btnDelete" : "onDeleteBtnClick"
+    },
+    onDeleteBtnClick : function(evt){
+        var parent = evt.target.parentNode;
         
     }
-    
 });

@@ -67,6 +67,20 @@ ExpenseManager.Models.UserData = Backbone.Model.extend({
         }
         function onError(response){
         }
+    },
+    addCategory : function(category){
+        url = "bussinessLogic/CategoryList.php";
+        ajaxRequest(url,category,onSuccessfullAdd,onError);
+		var me = this;
+		function onSuccessfullAdd(response){
+			var newCategory = response.categoryData;
+			var categoryModel = new ExpenseManager.Models.Category(newCategory);
+			me.m_Categories.add(categoryModel);
+            me.trigger(ExpenseManager.StringConstants.strNewCategorySaved,categoryModel);
+		}
+		function onError(response){
+
+		}
     }
 });
 
