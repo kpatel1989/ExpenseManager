@@ -9,10 +9,14 @@ ExpenseManager.Views.HomeUI = Backbone.View.extend({
 	initialize : function() {
         this.m_AddExpense = new ExpenseManager.Views.AddExpense({el : "#addExpense"});
         this.m_AddCategory = new ExpenseManager.Views.AddCategory({el : "#addCategory"});
-        this.m_tblTodaysExpenses = new ExpenseManager.Views.DailyExpense({el : "#expenseTable"});
+        this.m_tblTodaysExpenses = new ExpenseManager.Views.DailyExpense({el : "#expenseTablebody"});
         this.m_tblCategories = new ExpenseManager.Views.Categories({el : "#categoryList"});
+
         this.listenTo(this.m_AddExpense,ExpenseManager.StringConstants.strSaveExpenseBtnClick,this.saveExpenseBtnClick);
+        this.listenTo(this.m_AddExpense,ExpenseManager.StringConstants.strDateChange,this.onDateChange);
+
         this.listenTo(this.m_AddCategory,ExpenseManager.StringConstants.strSaveCategoryBtnClick,this.saveCategoryBtnClick);
+
         this.listenTo(this.m_tblCategories,ExpenseManager.StringConstants.strDeleteCategory,this.deleteCategoryBtnClick);
         this.listenTo(this.m_tblTodaysExpenses,ExpenseManager.StringConstants.strDeleteExpense,this.deleteExpenseBtnClick);
 	},
@@ -58,6 +62,9 @@ ExpenseManager.Views.HomeUI = Backbone.View.extend({
     },
     addNewCategory : function(category){
         this.m_tblCategories.addNewCategory(category);
+    },
+    onDateChange : function(date){
+        this.m_Model.loadTodaysExpenses();
     }
 });
 

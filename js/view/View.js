@@ -1,6 +1,6 @@
 ExpenseManager.Views.DailyExpense = Backbone.View.extend({
 	el : null,
-	tagName : 'tr',
+	tagName : 'tbody',
 	model : null,
 	template : null,
 
@@ -18,10 +18,18 @@ ExpenseManager.Views.DailyExpense = Backbone.View.extend({
 	render : function(event){
 		var i,curModel,template ;
 		var oExpenseList = this;
+        this.clearExpenseTable();
 		this.model.each(function(expense){
 			oExpenseList.$el[0].innerHTML += oExpenseList.template(expense.toJSON());
 		});
 	},
+    clearExpenseTable : function(){
+        tableHeader = $("#tableHeader")[0];
+        headerParent = tableHeader.parentNode;
+        while(tableHeader.nextSibling){
+            headerParent.removeChild(tableHeader.nextSibling);
+        }
+    },
     addNewExpense : function(expense){
         this.model.add(expense);
         this.$el[0].innerHTML += this.template(expense.toJSON());
@@ -69,7 +77,8 @@ ExpenseManager.Views.AddExpense = Backbone.View.extend({
 
 	},
     events : {
-        "click #btnSave" : "onSaveBtnClick"
+        "click #btnSave" : "onSaveBtnClick",
+        "change #TodayDate" : "onDateChange"
     },
     onSaveBtnClick : function(evt){
         expense = {
@@ -80,6 +89,10 @@ ExpenseManager.Views.AddExpense = Backbone.View.extend({
 		};
         this.trigger(ExpenseManager.StringConstants.strSaveExpenseBtnClick,expense);
     },
+    onDateChange : function(evt){
+        date = this.m_txtTodayDate[0].value;
+        this.trigger(ExpenseManager.StringConstants.strDateChange,date);
+    }
 
 });
 
@@ -165,7 +178,8 @@ ExpenseManager.Views.Categories = Backbone.View.extend({
     removeCategory : function(inputField){
         var parent = inputField.parentNode;
         parent.parentNode.removeChild(parent);
-        removeOption(inputField.id);
+        var id=inputField.id.substring(ExpenseManager.StringConstants.InitCategoryInputField.length);
+        this.removeOption(id);
     },
     removeOption : function(id){
         var cmbParent = document.getElementById('cmbCategory');

@@ -108,7 +108,7 @@ ExpenseManager.Models.UserData = Backbone.Model.extend({
         function OnSuccessfullDelete(){
 
         }
-    }
+    },
 });
 
 ExpenseManager.Models.DailyExpense = Backbone.Model.extend({
