@@ -5,9 +5,6 @@ ExpenseManager.Models.UserData = Backbone.Model.extend({
 	initialize : function(){
 		this.m_TodaysExpenses = new ExpenseManager.Collections.DailyExpense();
         this.m_Categories = new ExpenseManager.Collections.Category();
-//        this.loadCategories();
-//        this.loadTodaysExpenses();
-
 		console.log("UserData model initialized");
 	},
 	setData : function(userData){
@@ -81,6 +78,36 @@ ExpenseManager.Models.UserData = Backbone.Model.extend({
 		function onError(response){
 
 		}
+    },
+    deleteCategory : function(id){
+        url = "bussinessLogic/DeleteCategory.php";
+        data = {
+            operation : "delete",
+            categoryId : id
+        };
+        ajaxRequest(url,data,OnSuccessfullDelete,OnError);
+
+        function OnError(response){
+
+        };
+        function OnSuccessfullDelete(response){
+
+        }
+    },
+    deleteExpense : function(id){
+        url = "bussinessLogic/DeleteExpense.php";
+        data = {
+            operation : "delete",
+            expenseId : id
+        };
+        ajaxRequest(url,data,OnSuccessfullDelete,OnError);
+
+        function OnError(response){
+
+        };
+        function OnSuccessfullDelete(){
+
+        }
     }
 });
 

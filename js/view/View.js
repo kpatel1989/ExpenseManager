@@ -3,13 +3,15 @@ ExpenseManager.Views.DailyExpense = Backbone.View.extend({
 	tagName : 'tr',
 	model : null,
 	template : null,
+
 	initialize : function(expenses){
 		this.template = _.template( $("#expenseItem").html());
-//		this.$el = $("#expenseTable")[0];
 		this.model = expenses;
 		console.log("DailyExpense view initialised");
 	},
-	
+	events : {
+        "click #btnDeleteExpense" : "onDeleteExpenseBtnClick"
+    },
     setModel : function(model){
         this.model = model;   
     },
@@ -23,6 +25,23 @@ ExpenseManager.Views.DailyExpense = Backbone.View.extend({
     addNewExpense : function(expense){
         this.model.add(expense);
         this.$el[0].innerHTML += this.template(expense.toJSON());
+    },
+    onDeleteExpenseBtnClick : function(evt){
+        var row = evt.target.parentNode.parentNode;
+        var inputField = row.getElementsByTagName("input");
+        var idField;
+        for(var field in inputField){
+            if (inputField[field].id.indexOf(ExpenseManager.StringConstants.InitExpenseInputField)==0){
+                idField = inputField[field];
+                break;
+            }
+        }
+        var id=idField.id.substring(ExpenseManager.StringConstants.InitExpenseInputField.length);
+        this.removeExpense(row);
+        this.trigger(ExpenseManager.StringConstants.strDeleteExpense,id);
+    },
+    removeExpense : function(row){
+        row.parentNode.removeChild(row);
     }
 });
 
@@ -96,7 +115,6 @@ ExpenseManager.Views.Categories = Backbone.View.extend({
     
     initialize : function(){
         this.template = _.template( $("#categoryItem").html());
-//        this.$el = $("#categoryList")[0];
         this.dropDown = $("#cmbCategory")[0];
         this.model = new ExpenseManager.Collections.Category();
         console.log("Cateogory initialised.");
@@ -119,17 +137,43 @@ ExpenseManager.Views.Categories = Backbone.View.extend({
     },
     addNewCategory : function(category){
         this.$el[0].innerHTML += this.template(category.toJSON());
-
+        addOption(category);
+    },
+    addoption : function(category){
         var option = document.createElement("option");
         option.value = category.uCategoryId;
         option.innerHTML = category.strCategory;
         this.dropDown.appendChild(option);
     },
     events : {
-      "click #btnDelete" : "onDeleteBtnClick"
+      "click #btnDeleteCategory" : "onDeleteBtnClick"
     },
     onDeleteBtnClick : function(evt){
         var parent = evt.target.parentNode;
-        
+        var inputField = parent.getElementsByTagName("input");
+        var idField;
+        for(var field in inputField){
+            if (inputField[field].id.indexOf(ExpenseManager.StringConstants.InitCategoryInputField)==0){
+                idField = inputField[field];
+                break;
+            }
+        }
+        var id=idField.id.substring(ExpenseManager.StringConstants.InitCategoryInputField.length);
+        this.removeCategory(idField);
+        this.trigger(ExpenseManager.StringConstants.strDeleteCategory,id);
+    },
+    removeCategory : function(inputField){
+        var parent = inputField.parentNode;
+        parent.parentNode.removeChild(parent);
+        removeOption(inputField.id);
+    },
+    removeOption : function(id){
+        var cmbParent = document.getElementById('cmbCategory');
+		var options = cmbParent.options;
+		for(var i=0; i<options.length; i++){
+			if (options[i].value == id){
+				cmbParent.removeChild(options[i]);
+			}
+		}
     }
 });

@@ -30,8 +30,8 @@
 		<td><%= strCategory %> </td>
 		<td><%= uAmount %> </td>
 		<td><%= notes %> </td>
-		<td><input type="button" class="delete expense" value="Delete"/>
-			<input type="hidden" value=" <%= uExpenseId %>"/>
+		<td><input id="btnDeleteExpense" type="button" class="delete expense" value="Delete"/>
+			<input id="<%=ExpenseManager.StringConstants.InitExpenseInputField +uExpenseId %>" type="hidden" value="<%= uExpenseId %>"/>
 		</td>
 	</tr>
 </script>
@@ -39,8 +39,8 @@
 <script type="text/template" id="categoryItem">
 	<li>
         <label> <%= strCategory %></label>
-        <input id="btnDelete" type="button" class="delete category" value="Delete"/>
-        <input type="hidden" value="<%= uCategoryId %>"/>
+        <input id="btnDeleteCategory" type="button" class="delete category" value="Delete"/>
+        <input id="<%=ExpenseManager.StringConstants.InitCategoryInputField + uCategoryId%>" type="hidden" value="<%= uCategoryId %>"/>
         
 	</li>
 </script>
