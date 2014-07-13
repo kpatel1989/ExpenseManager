@@ -1,0 +1,134 @@
+*{
+    font-family: cursive;
+}
+body {
+    text-align: center;
+}
+.header{
+    height: 60px;
+    text-align: center;
+    background-color: #5C6376;
+}
+
+.title{
+    text-align: center;
+    display: block;
+
+    font-size: 30px;
+}
+
+.page-container{
+    max-width: 660;
+    text-align:center;
+    display: inline-block;
+    width: 100%;
+}
+
+.containers{
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+
+.left {
+    width: 455px;
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+    padding-left: 0px;
+    max-width: 100%;
+}
+
+.right{
+    width: 40px;
+    display: inline-block;
+    height: 100px;
+    vertical-align: top;
+}
+
+.center{
+    width: 200px;
+    display:inline-block;
+    text-align: center;
+    vertical-align: top;
+    border: 1px solid #5C6376;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+}
+
+input#txtExpense {
+    width: 92px;
+}
+textarea#txtNotes {
+    width: 185px;
+}
+input#btnSave {
+    vertical-align: bottom;
+}
+ul#categoryList {
+list-style: none;
+margin: 0px;
+text-align: left;
+padding: 0px;
+max-height: 450px;
+overflow-y: auto;
+}
+
+#categoryList label {
+width: 64%;
+display: inline-block;
+}
+#tableHeader th {
+ text-align: left;
+ font-weight: normal;
+ color: rgb(19, 25, 100);
+}
+table#expenseTable {
+    width: 100%;
+}
+.delete {
+    background-image: url(/ExpenseManager/images/close_btn.png);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    cursor: pointer;
+    border-style: none;
+    background-color: transparent;
+    width: 50px;
+    background-size: 15px 15px;
+}
+div#addCategory {
+    width: 100%;
+}
+#categoryList li {
+    padding-left: 30px;
+}
+#categoryList li:nth-child(odd), #expenseTable tr:nth-child(odd) {
+    background-color: #5C6376;
+    color: white;
+}
+#categoryList li:nth-child(even), #expenseTable tr:nth-child(even) {
+    background-color: #CACACA;
+}
+#expenseTable th:nth-child(3),#expenseTable td:nth-child(3) {
+    width: 40%;
+}
+#expenseTable td:nth-child(2){
+    text-align: right;
+}
+input#btnAddCategory {
+    margin-left: -7px;
+}
+#addExpense div:nth-child(1) {
+    max-width: 200px;
+    display: inline-block;
+}
+#addExpense div:nth-child(3) {
+    display: inline-block;
+    vertical-align: top;
+}
+input[type=text], textarea {
+    padding-left: 3px;
+}

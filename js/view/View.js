@@ -65,7 +65,9 @@ ExpenseManager.Views.AddExpense = Backbone.View.extend({
         this.m_txtTodayDate.datepicker();
         this.m_txtTodayDate.datepicker("option",{"dateFormat":"yy-mm-dd","showAnim":"slideDown"});
         today = new Date();
-        this.m_txtTodayDate[0].value = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+        var month = (today.getMonth() + 1);
+        month = month < 10 ? '0' + month : month;
+        this.m_txtTodayDate[0].value = today.getFullYear() + "-" + month + "-" + today.getDate();
 
         this.m_cmbCategory = $("#cmbCategory")[0];
         this.m_txtAmount = $("#txtExpense")[0];
@@ -150,9 +152,9 @@ ExpenseManager.Views.Categories = Backbone.View.extend({
     },
     addNewCategory : function(category){
         this.$el[0].innerHTML += this.template(category.toJSON());
-        addOption(category);
+        this.addOption(category);
     },
-    addoption : function(category){
+    addOption : function(category){
         var option = document.createElement("option");
         option.value = category.uCategoryId;
         option.innerHTML = category.strCategory;
