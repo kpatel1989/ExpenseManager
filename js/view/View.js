@@ -3,9 +3,11 @@ ExpenseManager.Views.DailyExpense = Backbone.View.extend({
 	tagName : 'tbody',
 	model : null,
 	template : null,
+    totalExpense : null,
 
 	initialize : function(expenses){
 		this.template = _.template( $("#expenseItem").html());
+        this.totalExpense = $("#txtTotalExpense")[0];
 		this.model = expenses;
 		console.log("DailyExpense view initialised");
 	},
@@ -20,8 +22,11 @@ ExpenseManager.Views.DailyExpense = Backbone.View.extend({
 		var oExpenseList = this;
         this.clearExpenseTable();
 		this.model.each(function(expense){
-			oExpenseList.$el[0].innerHTML += oExpenseList.template(expense.toJSON());
+            element = $(oExpenseList.template(expense.toJSON()))[0];
+			$(element).hide().appendTo(oExpenseList.$el[0]).fadeIn(500);
+            //oExpenseList.$el[0].append().fadeIn(100);
 		});
+        this.setTotalExpense();
 	},
     clearExpenseTable : function(){
         tableHeader = $("#tableHeader")[0];
@@ -32,7 +37,17 @@ ExpenseManager.Views.DailyExpense = Backbone.View.extend({
     },
     addNewExpense : function(expense){
         this.model.add(expense);
-        this.$el[0].innerHTML += this.template(expense.toJSON());
+        element = $(this.template(expense.toJSON()))[0];
+        $(element).hide().appendTo(this.$el[0]).fadeIn(500);
+        //this.$el[0].append(this.template(expense.toJSON())).fadeIn(100);
+        this.setTotalExpense();
+    },
+    setTotalExpense : function(){
+        var total = 0.0;
+        this.model.each(function(expense){
+            total += parseFloat(expense.uAmount);
+        });
+        this.totalExpense.innerHTML = parseFloat(total).toFixed(2);
     },
     onDeleteExpenseBtnClick : function(evt){
         var row = evt.target.parentNode.parentNode;
@@ -50,6 +65,7 @@ ExpenseManager.Views.DailyExpense = Backbone.View.extend({
     },
     removeExpense : function(row){
         row.parentNode.removeChild(row);
+        this.setTotalExpense();
     }
 });
 

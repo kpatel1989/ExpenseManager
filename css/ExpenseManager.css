@@ -3,18 +3,29 @@
 }
 body {
     text-align: center;
+    font-size: 64%;
 }
 .header{
     height: 60px;
-    text-align: center;
+    text-align: left;
     background-color: #5C6376;
+    padding: 5px;
 }
-
+.headerbody{
+    max-width:660px;
+    margin: 0 auto;
+}
+.logo {
+    width: 150px;
+    height: 50px;
+    margin-top: 5px;
+}
 .title{
     text-align: center;
-    display: block;
+    display: inline-block;
 
-    font-size: 30px;
+    font-size: 14px;
+    color: white;
 }
 
 .page-container{
@@ -22,6 +33,7 @@ body {
     text-align:center;
     display: inline-block;
     width: 100%;
+    font-size: 14px;
 }
 
 .containers{
@@ -60,10 +72,10 @@ body {
 }
 
 input#txtExpense {
-    width: 92px;
+    width: 89px;
 }
 textarea#txtNotes {
-    width: 185px;
+    width: 183px;
 }
 input#btnSave {
     vertical-align: bottom;
@@ -78,16 +90,17 @@ overflow-y: auto;
 }
 
 #categoryList label {
-width: 64%;
+width: 69%;
 display: inline-block;
 }
 #tableHeader th {
  text-align: left;
  font-weight: normal;
- color: rgb(19, 25, 100);
+ /* color: rgb(19, 25, 100); */
 }
 table#expenseTable {
     width: 100%;
+    border: 1px solid #5C6376;
 }
 .delete {
     background-image: url(/ExpenseManager/images/close_btn.png);
@@ -103,7 +116,7 @@ div#addCategory {
     width: 100%;
 }
 #categoryList li {
-    padding-left: 30px;
+    padding-left: 12px;
 }
 #categoryList li:nth-child(odd), #expenseTable tr:nth-child(odd) {
     background-color: #5C6376;
@@ -114,6 +127,7 @@ div#addCategory {
 }
 #expenseTable th:nth-child(3),#expenseTable td:nth-child(3) {
     width: 40%;
+    padding-left: 5px;
 }
 #expenseTable td:nth-child(2){
     text-align: right;

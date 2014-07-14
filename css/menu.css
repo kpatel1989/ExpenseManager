@@ -1,0 +1,24 @@
+div#menu {
+    width: auto;
+    height: 40px;
+    background-color: #5C6376;
+    border-top: 1px solid #989898;
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
+.menuItem {
+    display: inline-block;
+    font-size: 14px;
+    color: rgb(58, 176, 197);
+    border-right: 1px solid #989898;
+}
+.menuItemChild {
+    width: 84px;
+    height: 100%;
+    vertical-align: middle;
+    display: inline-block;
+    cursor: pointer;
+}
+#menu div[class="menuItem"]:last-child {
+    border-right: 0px;
+}

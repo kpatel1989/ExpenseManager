@@ -13,6 +13,7 @@
 		$expenses[$i]['uExpenseId'] = $row['uExpenseId'];
 		$expenses[$i]['strCategory'] = $row['strname'];
 	 	$expenses[$i]['uAmount'] = $row['uAmount'];
+        $expenses[$i]['notes'] = $row['notes'];
 	 	$i++;
 	}
 	$response = array();

@@ -116,14 +116,14 @@ ExpenseManager.Models.DailyExpense = Backbone.Model.extend({
 		strCategory : '',
 		notes : "",
 		uAmount : 0.0,
-		date : '',
 		uExpenseId : -1
 	},
 	initialize : function(data){
-		this.date = new Date();
+		data.uAmount= parseFloat(data.uAmount).toFixed(2);
 		this.uAmount = data.uAmount;
 		this.strCategory = data.strCategory;
 		this.uExpenseId = data.uExpenseId;
+        this.notes = data.notes;
 		console.log("DailyExpense model initailized");
 	}
 });
