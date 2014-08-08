@@ -17,7 +17,7 @@
 	 	$i++;
 	}
 	$response = array();
-	$response["bSuccessfull"] = true;
+	$response["bSuccessful"] = true;
 	$response["expenses"] = $expenses;
 	$config->disconnect($con);
 	echo json_encode($response);

@@ -16,7 +16,7 @@ ExpenseManager.Models.UserData = Backbone.Model.extend({
 			this.m_TodaysExpenses = userData.lstTodaysExpense;
 	},
     loadTodaysExpenses : function(){
-        url = "bussinesslogic/TodaysExpense.php";
+        url = "/ExpenseManager/bussinesslogic/TodaysExpense.php";
         data = {
             date : $("#TodayDate")[0].value
         }
@@ -35,7 +35,7 @@ ExpenseManager.Models.UserData = Backbone.Model.extend({
         }
     },
     loadCategories : function(){
-        url = "bussinessLogic/CategoryList.php";
+        url = "/ExpenseManager/bussinessLogic/CategoryList.php";
         ajaxRequest(url,"",onSuccess,onError);
         var me = this;
         function onSuccess(response){
@@ -54,33 +54,48 @@ ExpenseManager.Models.UserData = Backbone.Model.extend({
         }
     },
     addExpenseRow : function(expense){
-        url = "bussinesslogic/SaveExpense.php";
+        url = "/ExpenseManager/bussinesslogic/SaveExpense.php";
         ajaxRequest(url,expense, onExpenseAdded, onError);
         var me = this;
         function onExpenseAdded(response){
-            var newExpense = new ExpenseManager.Models.DailyExpense(response);
-            me.m_TodaysExpenses.add(newExpense);
-            me.trigger(ExpenseManager.StringConstants.strNewExpenseSaved,newExpense);
+            if (response.bSuccessful)
+            {
+                var newExpense = new ExpenseManager.Models.DailyExpense(response.expenseData);
+                me.m_TodaysExpenses.add(newExpense);
+                me.trigger(ExpenseManager.StringConstants.strNewExpenseSaved,newExpense);
+                if (response.categoryData)
+                {
+                    //me.addCategoryResponse(response);
+                }
+            }
         }
         function onError(response){
         }
     },
     addCategory : function(category){
-        url = "bussinessLogic/CategoryList.php";
-        ajaxRequest(url,category,onSuccessfullAdd,onError);
+        url = "/ExpenseManager/bussinessLogic/CategoryList.php";
+        ajaxRequest(url,category,this.addCategoryResponse,onError);
 		var me = this;
-		function onSuccessfullAdd(response){
-			var newCategory = response.categoryData;
-			var categoryModel = new ExpenseManager.Models.Category(newCategory);
-			me.m_Categories.add(categoryModel);
-            me.trigger(ExpenseManager.StringConstants.strNewCategorySaved,categoryModel);
-		}
+
 		function onError(response){
 
 		}
     },
+    addCategoryResponse : function(response){
+        if (response.bSuccessful)
+        {
+            var newCategory = response.categoryData;
+            var categoryModel = new ExpenseManager.Models.Category(newCategory);
+            this.m_Categories.add(categoryModel);
+            this.trigger(ExpenseManager.StringConstants.strNewCategorySaved,categoryModel);
+        }
+        else
+        {
+            this.trigger(ExpenseManager.StringConstants.strAddCategoryError,response.strDescription);
+        }
+    },
     deleteCategory : function(id){
-        url = "bussinessLogic/DeleteCategory.php";
+        url = "/ExpenseManager/bussinessLogic/DeleteCategory.php";
         data = {
             operation : "delete",
             categoryId : id
@@ -95,7 +110,7 @@ ExpenseManager.Models.UserData = Backbone.Model.extend({
         }
     },
     deleteExpense : function(id){
-        url = "bussinessLogic/DeleteExpense.php";
+        url = "/ExpenseManager/bussinessLogic/DeleteExpense.php";
         data = {
             operation : "delete",
             expenseId : id

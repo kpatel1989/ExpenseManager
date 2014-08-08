@@ -60,6 +60,8 @@ ExpenseManager.Views.DailyExpense = Backbone.View.extend({
             }
         }
         var id=idField.id.substring(ExpenseManager.StringConstants.InitExpenseInputField.length);
+        var expenseModel = this.model.where({uExpenseId : parseInt(id)});
+        this.model.remove(expenseModel);
         this.removeExpense(row);
         this.trigger(ExpenseManager.StringConstants.strDeleteExpense,id);
     },
@@ -75,6 +77,7 @@ ExpenseManager.Views.AddExpense = Backbone.View.extend({
 	m_txtAmount : null,
 	m_txtNotes : null,
 	m_btnSave : null,
+    m_txtCategoryName : null,
 
 	initialize : function(){
 		this.m_txtTodayDate = $('#TodayDate');
@@ -83,12 +86,15 @@ ExpenseManager.Views.AddExpense = Backbone.View.extend({
         today = new Date();
         var month = (today.getMonth() + 1);
         month = month < 10 ? '0' + month : month;
-        this.m_txtTodayDate[0].value = today.getFullYear() + "-" + month + "-" + today.getDate();
+		var date = (today.getDate());
+		date = date < 10 ? '0' + date : date;
+        this.m_txtTodayDate[0].value = today.getFullYear() + "-" + month + "-" + date;
 
         this.m_cmbCategory = $("#cmbCategory")[0];
         this.m_txtAmount = $("#txtExpense")[0];
         this.m_txtNotes = $("#txtNotes")[0];
         this.m_btnSave = $("#btnSave")[0];
+        this.m_txtCategoryName = $("#txtExpenseCategoryName")[0];
 	},
 
 	render : function(){
@@ -100,11 +106,16 @@ ExpenseManager.Views.AddExpense = Backbone.View.extend({
     },
     onSaveBtnClick : function(evt){
         expense = {
-			category:this.m_cmbCategory.selectedOptions[0].value,
-			date : this.m_txtTodayDate[0].value,
-			value : this.m_txtAmount.value,
-			notes : this.m_txtNotes.value
+            operation : "addExpense",
+			category:this.m_txtCategoryName.value.trim(),
+			date : this.m_txtTodayDate[0].value.trim(),
+			value : this.m_txtAmount.value.trim(),
+			notes : this.m_txtNotes.value.trim()
 		};
+        if (expense.category == "" || expense.date == "" || expense.value == "")
+        {
+            return;
+        }
         this.trigger(ExpenseManager.StringConstants.strSaveExpenseBtnClick,expense);
     },
     onDateChange : function(evt){
@@ -125,10 +136,15 @@ ExpenseManager.Views.AddCategory = Backbone.View.extend({
         "click #btnAddCategory" : "onSaveBtnClick"
     },
     onSaveBtnClick : function(evt){
+
         category = {
 			operation : "add",
-			categoryName : $("#txtCategoryName")[0].value
+			categoryName : $("#txtCategoryName")[0].value.trim()
 		};
+        if (category.categoryName == "")
+        {
+            return;
+        }
         this.trigger(ExpenseManager.StringConstants.strSaveCategoryBtnClick,category);
     },
 	render : function(){
@@ -190,6 +206,8 @@ ExpenseManager.Views.Categories = Backbone.View.extend({
             }
         }
         var id=idField.id.substring(ExpenseManager.StringConstants.InitCategoryInputField.length);
+        var categoryModel = this.model.where({uCategoryId : parseInt(id)});
+        this.model.remove(categoryModel);
         this.removeCategory(idField);
         this.trigger(ExpenseManager.StringConstants.strDeleteCategory,id);
     },

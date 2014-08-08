@@ -1,31 +1,17 @@
 <?php
 require_once  './Config.php';
 require_once './DatabaseManipulation.php';
+require_once './ClsCategory.php';
 $config = Config::getInstance();
 $dmlQuery = DMLQuery::getInstance($config);
 if (isset($_POST['operation'])){
-	$con = $config->connect();
-	
-	$qry = "Select max(uCategoryId) from tblcategories";
-	$result = mysqli_query($con,$qry);
-	$row = mysqli_fetch_assoc($result);
-	
-	$qry = "insert into tblcategories (uCategoryId,strname) values(" . ($row['max(uCategoryId)'] +1) . ",'" .$_POST['categoryName'] . "')";
-	$result = mysqli_query($con,$qry);	
-	$config->disconnect($con);
-	
-	$categoryData = array();
-	$categoryData["strCategory"] = $_POST['categoryName'];
-	$categoryData["uCategoryId"] = ($row['max(uCategoryId)'] +1);
-	$response = array();
-	$response["bSuccessfull"] = TRUE;
-	$response["categoryData"] = $categoryData;
-	echo json_encode($response);
+	$oCategory = Category::getInstance($config);
+    echo json_encode($oCategory->insertCategory($_POST['categoryName']));
 }
 else {
 
 	$con = $config->connect();
-	$qry = "Select * from tblcategories";
+	$qry = "Select * from tblcategories where bMarkedAsDeleted = false";
 	$result = mysqli_query($con,$qry);
 	$categoryData = array();
 	$i = 0;
@@ -36,7 +22,7 @@ else {
 	}
 	$config->disconnect($con);
 	$response = array();
-	$response["bSuccessfull"] = true;
+	$response["bSuccessful"] = true;
 	$response["arrCategoryNames"] = $categoryData;
 	echo json_encode($response);
 }

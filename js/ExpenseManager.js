@@ -1,12 +1,6 @@
-var model_UserData;
-var homeUI;
+
 $(document).ready(function(){
-    model_UserData = new ExpenseManager.Models.UserData();
-    homeUI = new ExpenseManager.Views.HomeUI();
-    homeUI.setModel(model_UserData);
-    
-    model_UserData.loadTodaysExpenses();
-    model_UserData.loadCategories();
+    var controller = new ExpenseManager.Views.ExpenseManagerCtrlr({el: "#expenseManager"});
 });
 
 function ajaxRequest(url,data,onSuccess,onError){

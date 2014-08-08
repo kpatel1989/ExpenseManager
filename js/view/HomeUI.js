@@ -14,9 +14,7 @@ ExpenseManager.Views.HomeUI = Backbone.View.extend({
 
         this.listenTo(this.m_AddExpense,ExpenseManager.StringConstants.strSaveExpenseBtnClick,this.saveExpenseBtnClick);
         this.listenTo(this.m_AddExpense,ExpenseManager.StringConstants.strDateChange,this.onDateChange);
-
         this.listenTo(this.m_AddCategory,ExpenseManager.StringConstants.strSaveCategoryBtnClick,this.saveCategoryBtnClick);
-
         this.listenTo(this.m_tblCategories,ExpenseManager.StringConstants.strDeleteCategory,this.deleteCategoryBtnClick);
         this.listenTo(this.m_tblTodaysExpenses,ExpenseManager.StringConstants.strDeleteExpense,this.deleteExpenseBtnClick);
 	},

@@ -6,10 +6,10 @@ $response["bSuccessfull"] = false;
 if (isset($_POST['operation']) && $_POST['operation'] == "delete"){
 	$config = Config::getInstance();
 	$con = $config->connect();
-	$qry = "delete from tblcategories where uCategoryId=".$_POST['categoryId'];
+    $qry = "update tblcategories set bMarkedAsDeleted = true where uCategoryId=".$_POST['categoryId'];
 	$result = mysqli_query($con,$qry);
 	$config->disconnect($con);
-	$response["bSuccessfull"] = true;
+	$response["bSuccessful"] = true;
 }
 echo json_encode($response);
 ?>
