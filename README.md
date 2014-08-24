@@ -1,6 +1,7 @@
 ExpenseManager
 ==============
 This is an Expense tracking application built using html, css, javascript.
+
 Supported featues are :
   Add daliy expense.(if category doesnt exists while adding new expense new category is created)
   Add new Category.
