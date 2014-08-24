@@ -78,6 +78,7 @@ ExpenseManager.Views.AddExpense = Backbone.View.extend({
 	m_txtNotes : null,
 	m_btnSave : null,
     m_txtCategoryName : null,
+	m_txtError : null,
 
 	initialize : function(){
 		this.m_txtTodayDate = $('#TodayDate');
@@ -90,11 +91,12 @@ ExpenseManager.Views.AddExpense = Backbone.View.extend({
 		date = date < 10 ? '0' + date : date;
         this.m_txtTodayDate[0].value = today.getFullYear() + "-" + month + "-" + date;
 
-        this.m_cmbCategory = $("#cmbCategory")[0];
-        this.m_txtAmount = $("#txtExpense")[0];
-        this.m_txtNotes = $("#txtNotes")[0];
-        this.m_btnSave = $("#btnSave")[0];
-        this.m_txtCategoryName = $("#txtExpenseCategoryName")[0];
+        this.m_cmbCategory = $("#cmbCategory");
+        this.m_txtAmount = $("#txtExpense");
+        this.m_txtNotes = $("#txtNotes");
+        this.m_btnSave = $("#btnSave");
+        this.m_txtCategoryName = $("#txtExpenseCategoryName");
+		this.m_txtError = $("#txtError");
 	},
 
 	render : function(){
@@ -107,17 +109,28 @@ ExpenseManager.Views.AddExpense = Backbone.View.extend({
     onSaveBtnClick : function(evt){
         expense = {
             operation : "addExpense",
-			category:this.m_txtCategoryName.value.trim(),
+			category:this.m_txtCategoryName[0].value.trim(),
 			date : this.m_txtTodayDate[0].value.trim(),
-			value : this.m_txtAmount.value.trim(),
-			notes : this.m_txtNotes.value.trim()
+			value : this.m_txtAmount[0].value.trim(),
+			notes : this.m_txtNotes[0].value.trim()
 		};
         if (expense.category == "" || expense.date == "" || expense.value == "")
         {
+			this.showError("Invalid/Empty details.");
             return;
         }
         this.trigger(ExpenseManager.StringConstants.strSaveExpenseBtnClick,expense);
+		this.clearFields();
     },
+	showError : function(msg){
+		this.m_txtError[0].innerHTML = msg;
+	},
+	clearFields : function(){
+		this.m_txtCategoryName[0].value = "";
+		this.m_txtAmount[0].value = "";
+		this.m_txtNotes[0].value = "";
+		this.m_txtError[0].value = "";
+	},
     onDateChange : function(evt){
         date = this.m_txtTodayDate[0].value;
         this.trigger(ExpenseManager.StringConstants.strDateChange,date);

@@ -5,11 +5,14 @@
 }
 #graph {
     width: 500px;
-    height: 500px;
+    height: auto;
     display: inline-block;
+    padding: 10px;
+    background-color: rgb(201, 224, 247);
+    min-height: 500px;
 }
 #verticalBar {
-    width: 100px;
+    width: 99px;
     height: 100%;
     position: absolute;
     border-right: 1px solid #19477F;
@@ -24,7 +27,7 @@
     box-sizing: border-box;
     border-top: 1px solid #19477F;
 }
-#verticalBar > div {
+#verticalBarChild {
     position: absolute;
     width: 100%;
     bottom: 0px;
@@ -36,36 +39,117 @@
     text-align: right;
     box-sizing: border-box;
     margin-bottom: 10px;
+    height: 30px;
+    position: relative;
 }
 #horizontalBar > div {
     height: 100%;
     display: inline-block;
-    width: 80px;
-    text-align: center;
+    width: 40px;
+    text-align: right;
     position: relative;
     padding-top: 5px;
+    vertical-align: top;
 }
 #chartTitle {
-    display: inline-block;
+    display: none;
     left: 50%;
     font-size: 20px;
     position: absolute;
 }
-div#horizontalBar > div > div {
+
+#xpointer {
     height: 8px;
-	width: 1px;
+
+    width: 100%;
 	vertical-align: top;
 	display: inline-block;
 	position: absolute;
 	top: -5px;
 	font-size: 10px;
-	left: 50%;
-	border-left: 1px solid #5E5E5E;
+    left: 0px;
+    border-right: 1px solid #5E5E5E;
+}
+#ypointer {
+    height: 100%;
+
+    width: 8px;
+
+    vertical-align: bottom;
+	display: inline-block;
+	position: absolute;
+
+    top: 0px;
+	font-size: 10px;
+    right: -4px;
+    border-top: 1px solid #5E5E5E;
 }
 div#databar {
     position: absolute;
     bottom: 40px;
     left: 100px;
     width: 400px;
-    height: 400px;
+    height: auto;
+    /* background-color: rgba(39, 79, 117, 0.31); */
+}
+#databar > div {
+    /* position: absolute; */
+    width: 100%;
+    bottom: 0px;
+    text-align: left;
+    height: auto;
+}
+#databar > div > .verticalBar {
+   	display: block;
+    padding: 3px;
+    text-align: right;
+    box-sizing: border-box;
+
+   	margin-bottom: 17px;
+}
+
+#databar > div > .horizontalBar {
+	display: inline-block;
+
+	padding: 3px;
+    text-align: right;
+    box-sizing: border-box;
+    vertical-align: bottom;
+	width: 25px;
+	margin-left: 15px;
+	color: white;
+}
+
+.dataBarText
+{
+	font-size: 12px;
+	color: white;
+}
+
+.xAxisText
+{
+	display: inline-block;
+}
+.xAxisText.verticalGraph
+{
+	text-align: right;
+	width: 67px;
+}
+.yAxisText
+{
+
+}
+.yAxisText.verticalGraph
+{
+    position: absolute;
+
+    right: 9px;
+    top: -9px;
+}
+.rotate
+{
+	transform: rotate(-67deg);
+	-webkit-transform: rotate(-60deg);
+	-ms-transform:rotate(-67deg);
+	-webkit-transform-origin: 37px 38px; /* Chrome, Safari, Opera */   /* Chrome, Safari, Opera */
 }

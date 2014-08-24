@@ -2,6 +2,7 @@
 require_once  './Config.php';
 require_once './DatabaseManipulation.php';
 require_once './ClsCategory.php';
+$response = array();
 if (isset($_POST["operation"]) && $_POST['operation'] == "addExpense"){
 	$config = Config::getInstance();
 	$dmlQuery = DMLQuery::getInstance($config);

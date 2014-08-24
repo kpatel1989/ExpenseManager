@@ -4,7 +4,9 @@ ExpenseManager.Views.ExpenseManagerCtrlr = Backbone.View.extend({
     menu : null,
     el : null,
     currentWindow : null,
-	chart : null,
+	//chart : null,
+	expenseHistory : null,
+
     initialize : function(){
         this.currentWindow = $("homeUI");
 
@@ -28,7 +30,6 @@ ExpenseManager.Views.ExpenseManagerCtrlr = Backbone.View.extend({
             case "btnhome" :
                 $("#homeUI").show();
                 this.currentWindow = $("#homeUI");
-				this.model.load
                 //flipTo($("#homeUI")[0]);
             break;
             case "btncategories" :
@@ -39,20 +40,8 @@ ExpenseManager.Views.ExpenseManagerCtrlr = Backbone.View.extend({
             case "btnexpenseHistory" :
                 $("#expenseHistory").show();
                 this.currentWindow = $("#expenseHistory");
-				if (!this.chart)
-					this.chart = new BarChart();
+				this.expenseHistory = new ExpenseManager.Views.ExpenseHistory({$el : "#expenseHistory"});
 
-				data = {
-					'GraphType' : BarChart.GraphType.HORIZONTAL,
-					'YAxisData' : [200,300,400,500,600],
-					'XAxisData' : ['a','b','c','d','e'],
-					'Values' : [1,2,3,4,5],
-					'XAxisTitle' : "x axis",
-					'YAxisTitle' : 'y axis',
-					'ChartTitle' : 'new bar chart',
-				};
-				this.chart.initialize(data);
-				this.chart.render($("#graph")[0]);
                 //flipTo($("expenseHistory")[0]);
             break;
             case "btnimportExpense" :

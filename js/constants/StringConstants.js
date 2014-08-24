@@ -17,6 +17,8 @@ ExpenseManager.StringConstants.strExpenseHistoryBtnClick = "expenseHistoryBtnCli
 ExpenseManager.StringConstants.strImportExpenseBtnClick = "importExpenseBtnClick";
 ExpenseManager.StringConstants.strProfileSettingsBtnClick = "profileSettingsBtnClick";
 ExpenseManager.StringConstants.strMenuBtnClick = "menuBtnClick";
+ExpenseManager.StringConstants.strExpenseHistoryResponse = "expenseHistoryResponse";
+
 
 ExpenseManager.StringConstants.InitCategoryInputField = "category";
 ExpenseManager.StringConstants.InitExpenseInputField = "expense";

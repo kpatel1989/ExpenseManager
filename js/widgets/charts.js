@@ -1,82 +1,44 @@
-BarChart = function(){
+BarChart = Backbone.View.extend({
 
-
-
-};
-BarChart.GraphType = {HORIZONTAL : 0, VERTICAL : 1};
-
-BarChart.prototype = {
-	m_YAxisData : null,
-	m_XAxisData : null,
-	m_values : null,
-	m_GraphType : null,
-	m_YAxisTitle : null,
-	m_XAxisTitle : null,
-	m_BarColors : null,
-	m_ChartParent : null,
-	m_ChartTitle : null,
+	m_Model : null,
 
 	m_mainDiv : null,
 	m_verticalBar : null,
 	m_verticalBarChild : null,
 	m_horizontalBar : null,
 	m_dataBar : null,
+	m_dataBarChild : null,
 	m_lstVerticalCaption : null,
 	m_lstHorizontalCaption : null,
 	m_Title : null,
 	m_lstBars : null,
 	m_lstColors : null,
 
-	initialize : function(data){
-		this.setGraphType(data['GraphType']);
-		this.setYAxisData(data['YAxisData']);
-		this.setXAxisData(data['XAxisData']);
-		this.setGraphData(data['Values']);
-		this.setXAxisTitle(data['XAxisTitle']);
-		this.setYAxisTitle(data['YAxisTitle']);
-		this.setColors(this.generateColors());
-		this.setTitle(data['ChartTitle']);
-		this.m_bDirty = false;
-	},
-	setGraphType : function(type){
-		this.m_GraphType = type;
-	},
-	setTitle : function(title){
-		this.m_ChartTitle = data['ChartTitle'];
-	},
-	setYAxisTitle : function(title){
-		this.m_YAxisTitle = title;
-	},
-	setXAxisTitle : function(title){
-		this.m_XAxisTitle = title;
-	},
-	setYAxisData : function(yAxisData){
-		this.m_YAxisData = $.map(yAxisData,function(el){ return el; });
-	},
-	setXAxisData : function(xAxisData){
-		this.m_XAxisData = $.map(xAxisData,function(el){ return el; });
-	},
-	setGraphData : function(graphData){
-		this.m_values = $.map(graphData,function(el){ return el; });
-	},
-	setColors : function(colors){
-		if (colors)
-			this.m_BarColors = $.map(colors,function(el){ return el; });
-	},
-	refesh : function(){
-		this.setData();
-	},
-	render : function(container){
-		if (container && container.nodeName.toLowerCase() == "div"){
-			this.m_ChartParent = container;
-		}
+	m_animation : null,
 
+	initialize : function(){
+		this.m_ChartParent = this.$el[0];
+	},
+	setModel : function(model){
+		this.m_Model = model;
+		this.listenTo(this.m_Model,BarChart.DRAW_CHART,this.OnDrawEvent);
+	},
+
+	getModel : function(){
+		return this.m_Model;
+	},
+
+	OnDrawEvent : function(){
+		this.render();
+	},
+
+	//view functions
+	render : function(){
 		this.clearChart();
 		this.initElements();
 		this.renderData();
-
-
 	},
+
 	initElements : function(){
 		this.m_mainDiv = document.createElement("div");
 		this.m_mainDiv.id = "barChart";
@@ -88,42 +50,93 @@ BarChart.prototype = {
 		this.m_horizontalBar.id = "horizontalBar";
 		this.m_dataBar = document.createElement("div");
 		this.m_dataBar.id = "databar";
+		this.m_dataBarChild = document.createElement("div");
+		this.m_dataBarChild.id = "databarChild";
 
 		this.m_Title = document.createElement("div");
 		this.m_Title.id = "chartTitle";
+
+
+		this.m_ChartParent.appendChild(this.m_mainDiv);
+		this.m_mainDiv.appendChild(this.m_verticalBar);
+		this.m_mainDiv.appendChild(this.m_horizontalBar);
+		this.m_verticalBar.appendChild(this.m_verticalBarChild);
+
+		this.m_mainDiv.appendChild(this.m_Title);
+
+		this.m_dataBar.appendChild(this.m_dataBarChild);
+		this.m_mainDiv.appendChild(this.m_dataBar);
+
+
+	},
+	renderData : function(){
+		this.m_Title.innerText = this.m_Model.m_ChartTitle;
+		this.m_Title.textContent = this.m_Model.m_ChartTitle;
+
 		this.m_lstColors = [];
+
+		if (!this.m_lstColors){
+			this.m_lstColors = this.m_Model.generateColors();
+		}
+
 		this.m_lstVerticalCaption = [];
-		for (i=0;i<this.m_YAxisData.length;i++)
+		for (i=0;i<this.m_Model.m_YAxisData.length;i++)
 		{
 			var div = document.createElement("div");
 			div.id = "y_axis_data_"+i;
 
+			var pointer = document.createElement("div");
+			pointer.id = "ypointer";
+
+			var text = document.createElement("div");
+			text.className = "yAxisText";
+
+			if (this.m_GraphType == BarChart.GraphType.VERTICAL)
+			{
+				text.className += " verticalGraph";
+			}
+
+			div.appendChild(text);
+			div.appendChild(pointer);
+
 			this.m_lstVerticalCaption.push(div);
 		}
+
 		this.m_lstHorizontalCaption = [];
-		for (i=0;i<this.m_XAxisData.length;i++)
+		for (i=0;i<this.m_Model.m_XAxisData.length;i++)
 		{
 			var div = document.createElement("div");
 			div.id = "x_axis_data_"+i;
 
 			var pointer = document.createElement("div");
-			pointer.id = "pointer";
-			div.appendChild(pointer);
+			pointer.id = "xpointer";
 
+			var text = document.createElement("div");
+			text.className ="xAxisText";
+			if (this.m_GraphType == BarChart.GraphType.VERTICAL)
+			{
+				text.className += " verticalGraph";
+				text.className += " rotate";
+			}
+
+			div.appendChild(pointer);
+			div.appendChild(text);
 			this.m_lstHorizontalCaption.push(div);
 		}
-		this.m_lstBars = [];
-		for (i=0;i<this.m_values.length;i++)
+
+		for (i=0;i<this.m_Model.m_YAxisData.length;i++)
 		{
-			var div = document.createElement("div");
-			div.id = "data_bar_"+i;
-			this.m_lstBars.push(div);
+			this.m_lstVerticalCaption[i].firstChild.appendChild(document.createTextNode(this.m_Model.m_YAxisData[i]));
 		}
-		this.m_ChartParent.appendChild(this.m_mainDiv);
-		this.m_mainDiv.appendChild(this.m_verticalBar);
-		this.m_mainDiv.appendChild(this.m_horizontalBar);
-		this.m_verticalBar.appendChild(this.m_verticalBarChild);
-		for (i=0;i<this.m_lstVerticalCaption.length;i++)
+
+		for (i=0;i<this.m_Model.m_XAxisData.length;i++)
+		{
+			this.m_lstHorizontalCaption[i].lastChild.appendChild(document.createTextNode(this.m_Model.m_XAxisData[i]));
+		}
+
+		this.createDataBars();
+
+		for (i=this.m_lstVerticalCaption.length-1;i>=0;i--)
 		{
 			this.m_verticalBarChild.appendChild(this.m_lstVerticalCaption[i]);
 		}
@@ -131,41 +144,50 @@ BarChart.prototype = {
 		{
 			this.m_horizontalBar.appendChild(this.m_lstHorizontalCaption[i]);
 		}
-		this.m_mainDiv.appendChild(this.m_Title);
-		for (i=0;i<this.m_lstBars.length;i++)
+		for (i=this.m_lstBars.length-1;i>=0;i--)
 		{
-			this.m_dataBar.appendChild(this.m_lstBars[i]);
+			this.m_dataBarChild.appendChild(this.m_lstBars[i]);
 		}
-		this.m_mainDiv.appendChild(this.m_dataBar);
-		//this.m_mainDiv.appendChild(this.m_lstBars);
-		//this.m_mainDiv.appendChild(this.m_lstColors);
+		this.resizeHeight();
 
 	},
-	renderData : function(){
-		this.m_Title.innerText = this.m_ChartTitle;
-		this.m_Title.textContent = this.m_ChartTitle;
-
-		if (!this.m_lstColors){
-			this.m_lstColors = this.generateColors();
-		}
-
-		for (i=0;i<this.m_YAxisData.length;i++)
+	createDataBars : function(){
+		this.m_lstBars = [];
+		for (k=0;k<this.m_Model.m_values.length;k++)
 		{
-			this.m_lstVerticalCaption[i].appendChild(document.createTextNode(this.m_YAxisData[i]));
-		}
+			var div = document.createElement("div");
+			div.id = "data_bar_"+k;
 
-		for (i=0;i<this.m_XAxisData.length;i++)
-		{
-			this.m_lstHorizontalCaption[i].appendChild(document.createTextNode(this.m_XAxisData[i]));
+			this.m_lstBars.push(div);
+			distance = this.m_Model.getDistance(this.m_Model.m_values[k]);
+			if (this.m_Model.m_GraphType == BarChart.GraphType.HORIZONTAL)
+			{
+				div.className = "verticalBar";
+				div.style.width = Math.round(distance,0) + "px";
+			}
+			else
+			{
+				div.className = "horizontalBar";
+				div.style.height = Math.round(distance,0) + "px";
+			}
+			div.style.backgroundColor = this.m_Model.m_BarColors[k];
+
+			var text = document.createElement("div");
+			text.innerHTML = (this.m_Model.m_values[k]).toFixed(2);
+			text.className = "dataBarText"
+			div.appendChild(text);
+
 		}
+		this.resizeHeight();
 	},
 	clearChart : function(){
 		if (this.m_mainDiv && this.m_mainDiv.parentNode)
 			this.m_mainDiv.parentNode.removeChild(this.m_mainDiv);
 
 	},
-	generateColors : function(){
+	resizeHeight : function(){
+	 	this.m_mainDiv.style.height = (this.m_verticalBarChild.offsetHeight + this.m_verticalBarChild.style	.paddingBottom * 2) + "px";
+		this.m_mainDiv.style.width = (this.m_)
+	}
+});
 
-	},
-
-}

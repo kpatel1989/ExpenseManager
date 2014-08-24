@@ -15,6 +15,7 @@
 <script src="/ExpenseManager/js/lib/jquery/jquery-ui-1.10.4.js"></script>
 <script src="/ExpenseManager/js/lib/handlebars/handlebars-v1.3.0.js"></script>
 <script src="/ExpenseManager/js/widgets/charts.js"></script>
+<script src="/ExpenseManager/js/widgets/chartsModel.js"></script>
 
 <script src="/ExpenseManager/js/main.js"></script>
 <script src="/ExpenseManager/js/constants/StringConstants.js"> </script>
@@ -26,6 +27,7 @@
 <!-- <script src="/ExpenseManager/js/handles/expenses.handlebars"></script> -->
 <script src="/ExpenseManager/js/ExpenseManager.js" type="text/javascript"></script>
 <script src="/ExpenseManager/js/view/ExpenseManagerCtrlr.js" type="text/javascript"></script>
+<script src="/ExpenseManager/js/view/ExpenseHistory.js" type="text/javascript"></script>
 
 <!-- <script src="/ExpenseManager/js/DateWheel.js" type="text/javascript"></script>-->
  <!-- <script data-main="js/main" src="js/lib/require/require.js"></script> -->
@@ -88,6 +90,7 @@
                 </div>
                 <input type="button" id="btnSave" name="Save" value="save" />
                     <div>Total Expense : <label id="txtTotalExpense"></label> </div>
+					<div id="txtError" class="error"> </div>
                 </div>
                 <div id="todaysExpense">
                 <table id="expenseTable" cellspacing=0>
@@ -122,9 +125,9 @@
                 <div class="anim-loading-box3"> </div>
             </div>
         </div>
-        <div id="expenseHistory">
-            <?php include 'ExpenseGraph.php' ?>
-        </div>
+
+		<?php include 'ExpenseGraph.php' ?>
+
         <div id="importExpense">
 
         </div>

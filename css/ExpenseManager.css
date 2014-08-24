@@ -81,6 +81,13 @@ textarea#txtNotes {
 input#btnSave {
     vertical-align: bottom;
 }
+.error{
+	color : red;
+	display : inline-block;
+
+	height: 20px;
+	width: 100%;
+}
 ul#categoryList {
 list-style: none;
 margin: 0px;
@@ -91,13 +98,12 @@ overflow-y: auto;
 }
 
 #categoryList label {
-width: 69%;
+width: 115px;
 display: inline-block;
 }
 #tableHeader th {
  text-align: left;
  font-weight: normal;
- /* color: rgb(19, 25, 100); */
 }
 table#expenseTable {
     width: 100%;
@@ -152,4 +158,14 @@ input[type=text], textarea {
     width: 500px;
     height: 500px;
     display: inline-block;
+}
+#graphMenu {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.graphMenuItem {
+	display: inline-block;
+	border: 1px solid #4A3E9B;
+	padding: 5px;
+	cursor: pointer;
 }
