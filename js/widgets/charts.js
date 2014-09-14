@@ -187,7 +187,7 @@ BarChart = Backbone.View.extend({
 	},
 	resizeHeight : function(){
 	 	this.m_mainDiv.style.height = (this.m_verticalBarChild.offsetHeight + this.m_verticalBarChild.style	.paddingBottom * 2) + "px";
-		this.m_mainDiv.style.width = (this.m_)
+		//this.m_mainDiv.style.width = (this.m_)
 	}
 });
 
