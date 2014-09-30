@@ -1,17 +1,17 @@
 <div id="expenseHistory">
 	<div id="graphMenu">
 		<div class="graphMenuItem" id="categoryReport">
-			Category-wise
+			Category-wise Report
 		</div>
 		<div class="graphMenuItem" id="monthlyReport">
-			Monthly Report
+			Daily Report
 		</div>
 		<div class="graphMenuItem" id="yearlyReport">
-			Yearly Report
+			Monthly Report
 		</div>
 	</div>
 	<div id="graphSubMenu">
-		<div>
+		<div class="graphSubMenuItem">
 			<select id="lstMonth">
 				<option value="01" id="option0"> January </option>
 				<option value="02" id="option1">  February </option>
@@ -27,8 +27,17 @@
 				<option value="12" id="option11"> December </option>
 			</select>
 		</div>
+		<div class="graphSubMenuItem">
+			<div>
+				Type : <input type=radio name=historyMode  value="Graph" checked/> Graph
+				<input type=radio name=historyMode  value="Memo"/> Memo
+			</div>
+		</div>
 	</div>
-	<div id="graph">
+	<div class="graph" id="graph">
+
+	</div>
+	<div class="memo" id="memo">
 
 	</div>
 </div>

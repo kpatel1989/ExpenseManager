@@ -56,6 +56,38 @@
 
         </li>
     </script>
+
+	<script type="text/template" id="MemoItem">
+		<div class="memoItem">
+			<div class="header"> <%= source %> </div>
+			<div class="details">
+			<table>
+				<tr>
+					<th class="particulars">Particulars</th>
+					<th class="amount" >Amount</th>
+				</tr>
+				<% i=0; %>
+				<%
+					details = Object.keys(details).map(function(k) { return details[k] });
+					_.each(details, function(item){ %>
+
+						<td>
+							<%= item.categoryName %>
+						</td>
+						<td>
+							<%= item.uAmount %>
+						</td>
+				</tr>
+				 <% });	 %>
+			<tr>
+				<td>Total : </td>
+				<td><%= total %></td>
+			</tr>
+			</table>
+
+			</div>
+		</div>
+	</script>
     <!--
     <a href="/ExpenseManager/SRS.htm"> S.R.S.</a>
     <div style="width:300px;height:150px" id="dateWheel">

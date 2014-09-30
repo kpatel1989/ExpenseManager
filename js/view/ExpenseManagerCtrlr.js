@@ -40,8 +40,10 @@ ExpenseManager.Views.ExpenseManagerCtrlr = Backbone.View.extend({
             case "btnexpenseHistory" :
                 $("#expenseHistory").show();
                 this.currentWindow = $("#expenseHistory");
-				this.expenseHistory = new ExpenseManager.Views.ExpenseHistory({$el : "#expenseHistory"});
-
+				if (!this.expenseHistory)
+				{
+					this.expenseHistory = new ExpenseManager.Views.ExpenseHistory({$el : "#expenseHistory"});
+				}
                 //flipTo($("expenseHistory")[0]);
             break;
             case "btnimportExpense" :
