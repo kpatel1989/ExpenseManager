@@ -78,7 +78,7 @@ ExpenseManager.Views.ExpenseHistory = Backbone.View.extend({
 				}
 				break;
 		}
-		url = "/ExpenseManager/bussinesslogic/Reports.php";
+		url = "/bussinesslogic/Reports.php";
 
 		me = this;
 		onSuccess = function(response){

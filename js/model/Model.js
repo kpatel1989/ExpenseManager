@@ -16,11 +16,11 @@ ExpenseManager.Models.UserData = Backbone.Model.extend({
 			this.m_TodaysExpenses = userData.lstTodaysExpense;
 	},
     loadTodaysExpenses : function(){
-        url = "/ExpenseManager/bussinesslogic/TodaysExpense.php";
+        url = "/bussinesslogic/TodaysExpense.php";
         data = {
             date : $("#TodayDate")[0].value
         }
-        ajaxRequest(url,data, onSuccess, onError)
+        ajaxRequest(url,data, onSuccess.bind(this), onError.bind(this))
         var me = this;
         function onSuccess(response){
             var expenses = response.expenses;
@@ -35,8 +35,8 @@ ExpenseManager.Models.UserData = Backbone.Model.extend({
         }
     },
     loadCategories : function(){
-        url = "/ExpenseManager/bussinessLogic/CategoryList.php";
-        ajaxRequest(url,"",onSuccess,onError);
+        url = "/bussinessLogic/CategoryList.php";
+        ajaxRequest(url,"",onSuccess.bind(this),onError.bind(this));
         var me = this;
         function onSuccess(response){
             var categories = response.arrCategoryNames;
@@ -54,8 +54,8 @@ ExpenseManager.Models.UserData = Backbone.Model.extend({
         }
     },
     addExpenseRow : function(expense){
-        url = "/ExpenseManager/bussinesslogic/SaveExpense.php";
-        ajaxRequest(url,expense, onExpenseAdded, onError);
+        url = "/bussinesslogic/SaveExpense.php";
+        ajaxRequest(url,expense, onExpenseAdded.bind(this), onError.bind(this));
         var me = this;
         function onExpenseAdded(response){
             if (response.bSuccessful)
@@ -73,8 +73,8 @@ ExpenseManager.Models.UserData = Backbone.Model.extend({
         }
     },
     addCategory : function(category){
-        url = "/ExpenseManager/bussinessLogic/CategoryList.php";
-        ajaxRequest(url,category,this.addCategoryResponse,onError);
+        url = "/bussinessLogic/CategoryList.php";
+        ajaxRequest(url,category,this.addCategoryResponse.bind(this),onError.bind(this));
 		var me = this;
 
 		function onError(response){
@@ -95,12 +95,12 @@ ExpenseManager.Models.UserData = Backbone.Model.extend({
         }
     },
     deleteCategory : function(id){
-        url = "/ExpenseManager/bussinessLogic/DeleteCategory.php";
+        url = "/bussinessLogic/DeleteCategory.php";
         data = {
             operation : "delete",
             categoryId : id
         };
-        ajaxRequest(url,data,OnSuccessfullDelete,OnError);
+        ajaxRequest(url,data,OnSuccessfullDelete.bind(this),OnError.bind(this));
 
         function OnError(response){
 
@@ -110,12 +110,12 @@ ExpenseManager.Models.UserData = Backbone.Model.extend({
         }
     },
     deleteExpense : function(id){
-        url = "/ExpenseManager/bussinessLogic/DeleteExpense.php";
+        url = "/bussinessLogic/DeleteExpense.php";
         data = {
             operation : "delete",
             expenseId : id
         };
-        ajaxRequest(url,data,OnSuccessfullDelete,OnError);
+        ajaxRequest(url,data,OnSuccessfullDelete.bind(this),OnError.bind(this));
 
         function OnError(response){
 

@@ -2,34 +2,34 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Expense Manager</title>
-<link href="/ExpenseManager/css/jquery-ui-1.10.4.css" rel="stylesheet" type="text/css" />
-<link href="/ExpenseManager/css/style.css" rel="stylesheet" type="text/css" />
-<link href="/ExpenseManager/css/menu.css" rel="stylesheet" type="text/css" />
-<!--<link href="/ExpenseManager/css/CalenderViewDate.css" rel="stylesheet" type="text/css" />-->
-<link href="/ExpenseManager/css/ExpenseManager.css" rel="stylesheet" type="text/css" />
-	<link href="/ExpenseManager/css/widgets/charts.css" rel="stylesheet" type="text/css" />
+<link href="/css/jquery-ui-1.10.4.css" rel="stylesheet" type="text/css" />
+<link href="/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/css/menu.css" rel="stylesheet" type="text/css" />
+<!--<link href="/css/CalenderViewDate.css" rel="stylesheet" type="text/css" />-->
+<link href="/css/ExpenseManager.css" rel="stylesheet" type="text/css" />
+	<link href="/css/widgets/charts.css" rel="stylesheet" type="text/css" />
 
-<script src="/ExpenseManager/js/lib/underscore/underscore.js"></script>
-<script src="/ExpenseManager/js/lib/jquery/jquery-1.11.0.js"></script>
-<script src="/ExpenseManager/js/lib/backbone/backbone.js"></script>
-<script src="/ExpenseManager/js/lib/jquery/jquery-ui-1.10.4.js"></script>
-<script src="/ExpenseManager/js/lib/handlebars/handlebars-v1.3.0.js"></script>
-<script src="/ExpenseManager/js/widgets/charts.js"></script>
-<script src="/ExpenseManager/js/widgets/chartsModel.js"></script>
+<script src="/js/lib/underscore/underscore.js"></script>
+<script src="/js/lib/jquery/jquery-1.11.0.js"></script>
+<script src="/js/lib/backbone/backbone.js"></script>
+<script src="/js/lib/jquery/jquery-ui-1.10.4.js"></script>
+<script src="/js/lib/handlebars/handlebars-v1.3.0.js"></script>
+<script src="/js/widgets/charts.js"></script>
+<script src="/js/widgets/chartsModel.js"></script>
 
-<script src="/ExpenseManager/js/main.js"></script>
-<script src="/ExpenseManager/js/constants/StringConstants.js"> </script>
-<script src="/ExpenseManager/js/model/Model.js" type="text/javascript"></script>
-<script src="/ExpenseManager/js/model/ExpenseManagerModel.js" type="text/javascript"></script>
-<script src="/ExpenseManager/js/view/View.js" type="text/javascript"></script>
-<script src="/ExpenseManager/js/view/MenuView.js" type="text/javascript"></script>
-<script src="/ExpenseManager/js/view/HomeUI.js" type="text/javascript"></script>
-<!-- <script src="/ExpenseManager/js/handles/expenses.handlebars"></script> -->
-<script src="/ExpenseManager/js/ExpenseManager.js" type="text/javascript"></script>
-<script src="/ExpenseManager/js/view/ExpenseManagerCtrlr.js" type="text/javascript"></script>
-<script src="/ExpenseManager/js/view/ExpenseHistory.js" type="text/javascript"></script>
+<script src="/js/main.js"></script>
+<script src="/js/constants/StringConstants.js"> </script>
+<script src="/js/model/Model.js" type="text/javascript"></script>
+<script src="/js/model/ExpenseManagerModel.js" type="text/javascript"></script>
+<script src="/js/view/View.js" type="text/javascript"></script>
+<script src="/js/view/MenuView.js" type="text/javascript"></script>
+<script src="/js/view/HomeUI.js" type="text/javascript"></script>
+<!-- <script src="/js/handles/expenses.handlebars"></script> -->
+<script src="/js/ExpenseManager.js" type="text/javascript"></script>
+<script src="/js/view/ExpenseManagerCtrlr.js" type="text/javascript"></script>
+<script src="/js/view/ExpenseHistory.js" type="text/javascript"></script>
 
-<!-- <script src="/ExpenseManager/js/DateWheel.js" type="text/javascript"></script>-->
+<!-- <script src="/js/DateWheel.js" type="text/javascript"></script>-->
  <!-- <script data-main="js/main" src="js/lib/require/require.js"></script> -->
 
     <style>
@@ -89,7 +89,7 @@
 		</div>
 	</script>
     <!--
-    <a href="/ExpenseManager/SRS.htm"> S.R.S.</a>
+    <a href="/SRS.htm"> S.R.S.</a>
     <div style="width:300px;height:150px" id="dateWheel">
 
     </div>
